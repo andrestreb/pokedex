@@ -4,9 +4,11 @@
   "private": true,
   "homepage": "http://andrestreb.github.io/pokedex",
   "dependencies": {
+    "@material-ui/core": "^4.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "typeface-roboto": "0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
