@@ -8,8 +8,8 @@ import Navbar from "./components/navbar";
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <header className="App-header">
-        <Navbar />
         <img src={logo} className="App-logo" alt="logo" />
         <p>Let's change the world!</p>
         <Button variant="contained" color="primary">
