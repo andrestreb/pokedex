@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,6 +22,21 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center"
+  });
+
+  const { vertical, horizontal, open } = state;
+
+  const handleClick = newState => () => {
+    setState({ open: true, ...newState });
+  };
+
+  function handleClose() {
+    setState({ ...state, open: false });
+  }
 
   return (
     <div className={classes.root}>
@@ -31,15 +47,25 @@ export default function ButtonAppBar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="Menu"
+            onClick={handleClick({ vertical: "top", horizontal: "left" })}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            Pokedex
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        key={`${vertical},${horizontal}`}
+        open={open}
+        onClose={handleClose}
+        ContentProps={{
+          "aria-describedby": "message-id"
+        }}
+        message={<span id="message-id">Do not work...yet!</span>}
+      />
     </div>
   );
 }
