@@ -1,4 +1,6 @@
 import React from "react";
+import "./navbar.css";
+import logo from "../img/pokeball.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -51,7 +53,9 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" className={classes.title}>
+            <img src={logo} className="navbar-logo" alt="pokeball" />
             Pokedex
           </Typography>
         </Toolbar>
@@ -61,6 +65,7 @@ export default function ButtonAppBar() {
         key={`${vertical},${horizontal}`}
         open={open}
         onClose={handleClose}
+        autoHideDuration="1000"
         ContentProps={{
           "aria-describedby": "message-id"
         }}
