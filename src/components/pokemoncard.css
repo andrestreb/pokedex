@@ -69,6 +69,10 @@
   white-space: nowrap;
 }
 
+.product-card .product-additional .product-img-card .product-img {
+  top: 50%;
+}
+
 .product-card .product-additional .product-img-card .product-status {
   top: 85%;
 }

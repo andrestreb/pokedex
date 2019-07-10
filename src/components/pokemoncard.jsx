@@ -43,7 +43,10 @@ class Pokemoncard extends Component {
         <div className="product-card">
           <div className="product-additional">
             <div className="product-img-card">
-              <div className="product-type product-center">API</div>
+              <div className="product-type product-center">N°{pokemon.id}</div>
+              <div className="product-img product-center">
+                <img src={pokemon.sprites.front_default} />
+              </div>
               <div className="product-status product-center">RUN</div>
 
               <i class="fa fa-language product-center" />
@@ -66,14 +69,14 @@ class Pokemoncard extends Component {
               </div>
               <div class="product-stats">
                 <div>
-                  <div class="title">Lang</div>
+                  <div class="title">Height</div>
                   <i class="fa fa-language" />
-                  <div class="value">40</div>
+                  <div class="value">{pokemon.height / 10}m</div>
                 </div>
                 <div>
-                  <div class="title">Available</div>
+                  <div class="title">weight</div>
                   <i class="fa fa-desktop" />
-                  <div class="value">27</div>
+                  <div class="value">{pokemon.weight / 10}kg</div>
                 </div>
                 <div>
                   <div class="title">Use</div>
@@ -89,7 +92,7 @@ class Pokemoncard extends Component {
             </div>
           </div>
           <div class="product-general">
-            <h1>hello</h1>
+            <h1>{pokemon.name}</h1>
             <p>
               A gorgeous service to give multi language features to all your
               desktop or mobile applications. Access Tools Admin to manage the
