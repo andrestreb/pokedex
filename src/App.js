@@ -3,15 +3,17 @@ import "./App.css";
 import "typeface-roboto";
 import Button from "@material-ui/core/Button";
 import Navbar from "./components/navbar";
+import Pokemoncard from "./components/pokemoncard";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
       <header className="App-header">
-        <p>Let's change the world!</p>
+        <Pokemoncard />
+
         <Button variant="contained" color="primary">
-          Hello World
+          Let's change the world!
         </Button>
       </header>
     </div>
