@@ -7,19 +7,34 @@ class Pokemoncard extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      pokemon: []
+      pokemon: [],
+      pokemonSpecies: [],
+      pokemonEvolution: []
     };
   }
 
   componentDidMount() {
     console.log("Pokemon - Mounted");
-    fetch("https://pokeapi.co/api/v2/pokemon/bulbasaur")
-      .then(res => res.json())
+    let pokemonAPICall = fetch("https://pokeapi.co/api/v2/pokemon/bulbasaur");
+    let pokemonSpeciesAPICall = fetch(
+      "https://pokeapi.co/api/v2/pokemon-species/bulbasaur"
+    );
+    let pokemonEvolutionAPICall = fetch(
+      "https://pokeapi.co/api/v2/evolution-chain/1"
+    );
+    Promise.all([
+      pokemonAPICall,
+      pokemonSpeciesAPICall,
+      pokemonEvolutionAPICall
+    ])
+      .then(values => Promise.all(values.map(value => value.json())))
       .then(
         data => {
           this.setState({
             isLoaded: true,
-            pokemon: data
+            pokemon: data[0],
+            pokemonSpecies: data[1],
+            pokemonEvolution: data[2]
           });
         },
         error => {
@@ -33,21 +48,29 @@ class Pokemoncard extends Component {
   }
 
   render() {
-    const { error, isLoaded, pokemon } = this.state;
+    const {
+      error,
+      isLoaded,
+      pokemon,
+      pokemonSpecies,
+      pokemonEvolution
+    } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className="product-card">
+        <div className={"product-card " + pokemonSpecies.color.name}>
           <div className="product-additional">
             <div className="product-img-card">
               <div className="product-type product-center">N°{pokemon.id}</div>
               <div className="product-img product-center">
                 <img src={pokemon.sprites.front_default} />
               </div>
-              <div className="product-status product-center">RUN</div>
+              <div className="product-status product-center">
+                {pokemonSpecies.egg_groups[0].name}
+              </div>
 
               <i class="fa fa-language product-center" />
             </div>
@@ -56,8 +79,8 @@ class Pokemoncard extends Component {
               <p />
 
               <div class="product-coords">
-                <span>Route name:</span>
-                <span>Translation</span>
+                <span>Evolution:</span>
+                <span>{pokemonEvolution.chain.evolves_to[0].species.name}</span>
               </div>
               <div class="product-coords">
                 <span>Created:</span>
@@ -93,11 +116,7 @@ class Pokemoncard extends Component {
           </div>
           <div class="product-general">
             <h1>{pokemon.name}</h1>
-            <p>
-              A gorgeous service to give multi language features to all your
-              desktop or mobile applications. Access Tools Admin to manage the
-              languages and labels.
-            </p>
+            <p>{pokemonSpecies.flavor_text_entries[1].flavor_text}</p>
             <span class="product-more">Mouse over the card for more info</span>
           </div>
         </div>
