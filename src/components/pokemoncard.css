@@ -115,8 +115,11 @@
   color: #325c46;
 }
 
-.product-card .product-additional .product-coords span + span {
-  float: right;
+.product-card .product-additional .product-evolution {
+  float: left;
+  width: 33.33%;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .product-card .product-additional .product-stats {

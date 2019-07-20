@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Paper from "@material-ui/core/Paper";
 import "./pokemoncard.css";
 
 class Pokemoncard extends Component {
@@ -15,9 +16,9 @@ class Pokemoncard extends Component {
 
   componentDidMount() {
     console.log("Pokemon - Mounted");
-    let pokemonAPICall = fetch("https://pokeapi.co/api/v2/pokemon/bulbasaur");
+    let pokemonAPICall = fetch("https://pokeapi.co/api/v2/pokemon/1");
     let pokemonSpeciesAPICall = fetch(
-      "https://pokeapi.co/api/v2/pokemon-species/bulbasaur"
+      "https://pokeapi.co/api/v2/pokemon-species/1"
     );
     let pokemonEvolutionAPICall = fetch(
       "https://pokeapi.co/api/v2/evolution-chain/1"
@@ -79,17 +80,22 @@ class Pokemoncard extends Component {
               <p />
 
               <div class="product-coords">
-                <span>Evolution:</span>
-                <span>{pokemonEvolution.chain.evolves_to[0].species.name}</span>
+                <span>Evolution chain:</span>
               </div>
-              <div class="product-coords">
-                <span>Created:</span>
-                <span>Summer 2017</span>
+              <br />
+              <div class="product-evolution">
+                {pokemonEvolution.chain.species.name}
               </div>
-              <div class="product-coords">
-                <span>Scope:</span>
-                <span>Global</span>
+              <div class="product-evolution">
+                {pokemonEvolution.chain.evolves_to[0].species.name}
               </div>
+              <div class="product-evolution">
+                {
+                  pokemonEvolution.chain.evolves_to[0].evolves_to[0].species
+                    .name
+                }
+              </div>
+
               <div class="product-stats">
                 <div>
                   <div class="title">Height</div>
@@ -102,14 +108,9 @@ class Pokemoncard extends Component {
                   <div class="value">{pokemon.weight / 10}kg</div>
                 </div>
                 <div>
-                  <div class="title">Use</div>
+                  <div class="title">XP</div>
                   <i class="fa fa-feed" />
-                  <div class="value">2k/day</div>
-                </div>
-                <div>
-                  <div class="title">Coffee</div>
-                  <i class="fa fa-coffee" />
-                  <div class="value infinity">∞</div>
+                  <div class="value">{pokemon.base_experience}</div>
                 </div>
               </div>
             </div>
