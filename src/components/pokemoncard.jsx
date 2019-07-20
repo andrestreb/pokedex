@@ -62,21 +62,23 @@ class Pokemoncard extends Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className={"product-card " + pokemonSpecies.color.name}>
+        <div className={"product-card " + this.props.pokemonSpecies.color.name}>
           <div className="product-additional">
             <div className="product-img-card">
-              <div className="product-type product-center">N°{pokemon.id}</div>
+              <div className="product-type product-center">
+                N°{this.props.pokemon.id}
+              </div>
               <div className="product-img product-center">
-                <img src={pokemon.sprites.front_default} />
+                <img src={this.props.pokemon.sprites.front_default} />
               </div>
               <div className="product-status product-center">
-                {pokemonSpecies.egg_groups[0].name}
+                {this.props.pokemonSpecies.egg_groups[0].name}
               </div>
 
               <i class="fa fa-language product-center" />
             </div>
             <div className="product-more-info">
-              <h1>{pokemon.name}</h1>
+              <h1>{this.props.pokemon.name}</h1>
               <p />
 
               <div class="product-coords">
@@ -84,15 +86,15 @@ class Pokemoncard extends Component {
               </div>
               <br />
               <div class="product-evolution">
-                {pokemonEvolution.chain.species.name}
+                {this.props.pokemonEvolution.chain.species.name}
               </div>
               <div class="product-evolution">
-                {pokemonEvolution.chain.evolves_to[0].species.name}
+                {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
               </div>
               <div class="product-evolution">
                 {
-                  pokemonEvolution.chain.evolves_to[0].evolves_to[0].species
-                    .name
+                  this.props.pokemonEvolution.chain.evolves_to[0].evolves_to[0]
+                    .species.name
                 }
               </div>
 
@@ -100,24 +102,26 @@ class Pokemoncard extends Component {
                 <div>
                   <div class="title">Height</div>
                   <i class="fa fa-language" />
-                  <div class="value">{pokemon.height / 10}m</div>
+                  <div class="value">{this.props.pokemon.height / 10}m</div>
                 </div>
                 <div>
                   <div class="title">weight</div>
                   <i class="fa fa-desktop" />
-                  <div class="value">{pokemon.weight / 10}kg</div>
+                  <div class="value">{this.props.pokemon.weight / 10}kg</div>
                 </div>
                 <div>
                   <div class="title">XP</div>
                   <i class="fa fa-feed" />
-                  <div class="value">{pokemon.base_experience}</div>
+                  <div class="value">{this.props.pokemon.base_experience}</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="product-general">
-            <h1>{pokemon.name}</h1>
-            <p>{pokemonSpecies.flavor_text_entries[1].flavor_text}</p>
+            <h1>{this.props.pokemon.name}</h1>
+            <p>
+              {this.props.pokemonSpecies.flavor_text_entries[1].flavor_text}
+            </p>
             <span class="product-more">Mouse over the card for more info</span>
           </div>
         </div>
