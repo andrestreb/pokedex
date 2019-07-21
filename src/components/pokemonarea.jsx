@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
 import "./pokemonarea.css";
 import Pokemoncard from "./pokemoncard";
 const POKEMONAPI = "https://pokeapi.co/api/v2/pokemon/";
 const POKEMONSPECIESAPI = "https://pokeapi.co/api/v2/pokemon-species/";
-const POKEMONEVOLUTIONAPI = "https://pokeapi.co/api/v2/evolution-chain/";
 
 class Pokemonarea extends Component {
   constructor(props) {
@@ -16,7 +14,8 @@ class Pokemonarea extends Component {
       pokemon: [],
       pokemonSpecies: [],
       pokemonEvolution: [],
-      pokemonId: 4
+      pokemonIdReady: true,
+      pokemonId: 1
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,37 +23,54 @@ class Pokemonarea extends Component {
   }
 
   handleChange(event) {
-    this.setState({ pokemonId: event.target.value });
+    let pokemonIdValue = "";
+    if ((event.target.value > 0) & (event.target.value < 152)) {
+      pokemonIdValue = event.target.value;
+      this.setState({ pokemonIdReady: true, pokemonId: pokemonIdValue }, () => {
+        this.callPokemonAPI(this.state.pokemonId);
+      });
+    } else {
+      this.setState({ pokemonIdReady: false, pokemonId: pokemonIdValue });
+    }
   }
 
   componentDidMount() {
     console.log("Pokemon - Mounted");
-    if (this.state.pokemonId !== "") {
+    if (this.state.pokemonIdReady == true) {
       this.callPokemonAPI(this.state.pokemonId);
+      console.log("Pokemon API called");
     }
-    console.log(this.state.pokemon);
+    this.setState({ pokemonIdReady: false });
   }
+
+  callEvolutionChainAPI = () => {
+    console.log("Pokemon Evolution API called");
+    fetch(this.state.pokemonSpecies.evolution_chain.url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          isLoaded: true,
+          pokemonEvolution: data
+        });
+      });
+  };
 
   callPokemonAPI = pokemonId => {
     let pokemonAPICall = fetch(POKEMONAPI + this.state.pokemonId);
     let pokemonSpeciesAPICall = fetch(POKEMONSPECIESAPI + this.state.pokemonId);
-    let pokemonEvolutionAPICall = fetch(
-      POKEMONEVOLUTIONAPI + this.state.pokemonId
-    );
-    Promise.all([
-      pokemonAPICall,
-      pokemonSpeciesAPICall,
-      pokemonEvolutionAPICall
-    ])
+    Promise.all([pokemonAPICall, pokemonSpeciesAPICall])
       .then(values => Promise.all(values.map(value => value.json())))
       .then(
         data => {
-          this.setState({
-            isLoaded: true,
-            pokemon: data[0],
-            pokemonSpecies: data[1],
-            pokemonEvolution: data[2]
-          });
+          this.setState(
+            {
+              pokemon: data[0],
+              pokemonSpecies: data[1]
+            },
+            () => {
+              this.callEvolutionChainAPI();
+            }
+          );
         },
         error => {
           this.setState({
@@ -74,9 +90,7 @@ class Pokemonarea extends Component {
       pokemonEvolution,
       pokemonId
     } = this.state;
-    if (this.state.pokemonId !== "") {
-      this.callPokemonAPI(this.state.pokemonId);
-    }
+
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -91,9 +105,6 @@ class Pokemonarea extends Component {
             label="Pokemon ID"
             value={pokemonId}
             onChange={this.handleChange}
-            InputLabelProps={{
-              shrink: true
-            }}
             margin="normal"
             variant="outlined"
           />
