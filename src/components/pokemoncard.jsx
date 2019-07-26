@@ -10,7 +10,6 @@ class Pokemoncard extends Component {
       pokemonSpecies,
       pokemonEvolution
     } = this.props;
-    console.log(this.props.pokemonEvolution);
     return (
       <div className={"product-card " + pokemonSpecies.color.name}>
         <div className="product-additional">
@@ -33,18 +32,7 @@ class Pokemoncard extends Component {
               <span>Evolution chain:</span>
             </div>
             <br />
-            <div class="product-evolution">
-              {this.props.pokemonEvolution.chain.species.name}
-            </div>
-            <div class="product-evolution">
-              {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
-            </div>
-            <div class="product-evolution">
-              {
-                this.props.pokemonEvolution.chain.evolves_to[0].evolves_to[0]
-                  .species.name
-              }
-            </div>
+            {this.getEvolutions()}
 
             <div className="product-stats">
               <div>
@@ -75,6 +63,60 @@ class Pokemoncard extends Component {
       </div>
     );
   }
+
+  getEvolutions() {
+    if (this.isEmpty(this.props.pokemonEvolution.chain.evolves_to[0])) {
+      return (
+        <React.Fragment>
+          <div class="product-evolution">
+            I don't evolve! I'm unique!{" "}
+            {this.props.pokemonEvolution.chain.species.name}
+          </div>
+        </React.Fragment>
+      );
+    } else {
+      if (
+        this.isEmpty(
+          this.props.pokemonEvolution.chain.evolves_to[0].evolves_to[0]
+        )
+      ) {
+        return (
+          <React.Fragment>
+            <div class="product-evolution">
+              {this.props.pokemonEvolution.chain.species.name}
+            </div>
+            <div class="product-evolution">
+              {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
+            </div>
+          </React.Fragment>
+        );
+      } else {
+        return (
+          <React.Fragment>
+            <div class="product-evolution">
+              {this.props.pokemonEvolution.chain.species.name}
+            </div>
+            <div class="product-evolution">
+              {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
+            </div>
+            <div class="product-evolution">
+              {
+                this.props.pokemonEvolution.chain.evolves_to[0].evolves_to[0]
+                  .species.name
+              }
+            </div>
+          </React.Fragment>
+        );
+      }
+    }
+  }
+
+  isEmpty = obj => {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
+  };
 }
 
 export default Pokemoncard;

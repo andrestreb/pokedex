@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import "./pokemonarea.css";
 import Pokemoncard from "./pokemoncard";
+import { isEmptyStatement } from "@babel/types";
 const POKEMONAPI = "https://pokeapi.co/api/v2/pokemon/";
 const POKEMONSPECIESAPI = "https://pokeapi.co/api/v2/pokemon-species/";
 
@@ -14,6 +15,7 @@ class Pokemonarea extends Component {
       pokemon: [],
       pokemonSpecies: [],
       pokemonEvolution: [],
+      pokemonEvolutions: 1,
       pokemonIdReady: true,
       pokemonId: 1
     };
@@ -24,7 +26,7 @@ class Pokemonarea extends Component {
 
   handleChange(event) {
     let pokemonIdValue = "";
-    if ((event.target.value > 0) & (event.target.value < 152)) {
+    if ((event.target.value > 0) & (event.target.value < 808)) {
       pokemonIdValue = event.target.value;
       this.setState({ pokemonIdReady: true, pokemonId: pokemonIdValue }, () => {
         this.callPokemonAPI(this.state.pokemonId);

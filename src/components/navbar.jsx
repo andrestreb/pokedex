@@ -64,7 +64,7 @@ export default function ButtonAppBar() {
         key={`${vertical},${horizontal}`}
         open={open}
         onClose={handleClose}
-        autoHideDuration="1000"
+        autoHideDuration={1000}
         ContentProps={{
           "aria-describedby": "message-id"
         }}
