@@ -1,9 +1,23 @@
 @import url("https://fonts.googleapis.com/css?family=Abel");
 
+:root {
+  --color-black: #c6c6a7;
+  --color-blue: #9db7f5;
+  --color-brown: #d1c17d;
+  --color-gray: #3d7dca;
+  --color-green: #c6d16e;
+  --color-pink: #fa92b2;
+  --color-purple: #a27dfa;
+  --color-red: #f5ac78;
+  --color-white: #3d7dca;
+  --color-yellow: #fae078;
+}
+
 .product-center {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
 }
 
@@ -28,14 +42,41 @@
   position: absolute;
   width: 150px;
   height: 100%;
-  background: linear-gradient(#de685e, #ee786e);
+  background: var(--color-red);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
 }
 
+.product-card.black .product-additional {
+  background: var(--color-black);
+}
+.product-card.blue .product-additional {
+  background: var(--color-blue);
+}
+.product-card.brown .product-additional {
+  background: var(--color-brown);
+}
+.product-card.gray .product-additional {
+  background: var(--color-gray);
+}
 .product-card.green .product-additional {
-  background: linear-gradient(#92bca6, #a2ccb6);
+  background: var(--color-green);
+}
+.product-card.pink .product-additional {
+  background: var(--color-pink);
+}
+.product-card.purple .product-additional {
+  background: var(--color-purple);
+}
+.product-card.red .product-additional {
+  background: var(--color-red);
+}
+.product-card.white .product-additional {
+  background: var(--color-white);
+}
+.product-card.yellow .product-additional {
+  background: var(--color-yellow);
 }
 
 .product-card:hover .product-additional {
@@ -97,22 +138,14 @@
 }
 
 .product-card .product-additional .product-more-info h1 {
-  color: #fff;
+  color: rgba(0, 0, 0, 0.65);
   margin-bottom: 0;
-}
-
-.product-card.green .product-additional .product-more-info h1 {
-  color: #224c36;
 }
 
 .product-card .product-additional .product-coords {
   margin: 0 1rem;
-  color: #fff;
+  color: rgba(0, 0, 0, 0.65);
   font-size: 1rem;
-}
-
-.product-card.green .product-additional .product-coords {
-  color: #325c46;
 }
 
 .product-card .product-additional .product-evolution {
@@ -130,11 +163,7 @@
   left: 1rem;
   right: 1rem;
   top: auto;
-  color: #fff;
-}
-
-.product-card.green .product-additional .product-stats {
-  color: #325c46;
+  color: rgba(0, 0, 0, 0.65);
 }
 
 .product-card .product-additional .product-stats > div {
