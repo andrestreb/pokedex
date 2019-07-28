@@ -55,7 +55,7 @@ class Pokemoncard extends Component {
         </div>
         <div className="product-general">
           <h1>{pokemon.name}</h1>
-          <p>{pokemonSpecies.flavor_text_entries[1].flavor_text}</p>
+          {this.getDescriptions()}
           <span className="product-more">
             Mouse over the card for more info
           </span>
@@ -64,14 +64,33 @@ class Pokemoncard extends Component {
     );
   }
 
+  getDescriptions() {
+    let nbrDesc = 0;
+    let nbrDescEnFound = 0;
+    while (nbrDescEnFound == 0) {
+      if (
+        this.props.pokemonSpecies.flavor_text_entries[nbrDesc].language.name ===
+        "en"
+      ) {
+        nbrDescEnFound = 1;
+      } else {
+        nbrDesc = nbrDesc + 1;
+      }
+    }
+    return (
+      <p>
+        {this.props.pokemonSpecies.flavor_text_entries[nbrDesc].flavor_text}
+      </p>
+    );
+  }
+
   getEvolutions() {
     if (this.isEmpty(this.props.pokemonEvolution.chain.evolves_to[0])) {
       return (
         <React.Fragment>
-          <div class="product-evolution">
-            I don't evolve! I'm unique!{" "}
-            {this.props.pokemonEvolution.chain.species.name}
-          </div>
+          <div class="product-evolution"> - </div>
+          <div class="product-evolution">I don't evolve! I'm unique! </div>
+          <div class="product-evolution"> - </div>
         </React.Fragment>
       );
     } else {
@@ -88,6 +107,7 @@ class Pokemoncard extends Component {
             <div class="product-evolution">
               {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
             </div>
+            <div class="product-evolution"> - </div>
           </React.Fragment>
         );
       } else {
