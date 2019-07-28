@@ -85,12 +85,13 @@ class Pokemoncard extends Component {
   }
 
   getEvolutions() {
+    const { secondEvolution } = this.props.pokemonEvolution.chain.evolves_to;
     if (this.isEmpty(this.props.pokemonEvolution.chain.evolves_to[0])) {
       return (
         <React.Fragment>
-          <div class="product-evolution"> - </div>
-          <div class="product-evolution">I don't evolve! I'm unique! </div>
-          <div class="product-evolution"> - </div>
+          <div className="product-evolution"> - </div>
+          <div className="product-evolution">I don't evolve! I'm unique! </div>
+          <div className="product-evolution"> - </div>
         </React.Fragment>
       );
     } else {
@@ -99,27 +100,42 @@ class Pokemoncard extends Component {
           this.props.pokemonEvolution.chain.evolves_to[0].evolves_to[0]
         )
       ) {
-        return (
-          <React.Fragment>
-            <div class="product-evolution">
-              {this.props.pokemonEvolution.chain.species.name}
-            </div>
-            <div class="product-evolution">
-              {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
-            </div>
-            <div class="product-evolution"> - </div>
-          </React.Fragment>
-        );
+        if (this.isEmpty(this.props.pokemonEvolution.chain.evolves_to[1])) {
+          return (
+            <React.Fragment>
+              <div className="product-evolution">
+                {this.props.pokemonEvolution.chain.species.name}
+              </div>
+              <div className="product-evolution">
+                {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
+              </div>
+              <div className="product-evolution"> - </div>
+            </React.Fragment>
+          );
+        } else {
+          return (
+            <React.Fragment>
+              <div className="product-evolution">
+                {this.props.pokemonEvolution.chain.species.name}
+              </div>
+              <div className="product-evolution2">
+                {this.props.pokemonEvolution.chain.evolves_to.map((gh, i) => (
+                  <span key={i}>{gh.species.name}, </span>
+                ))}
+              </div>
+            </React.Fragment>
+          );
+        }
       } else {
         return (
           <React.Fragment>
-            <div class="product-evolution">
+            <div className="product-evolution">
               {this.props.pokemonEvolution.chain.species.name}
             </div>
-            <div class="product-evolution">
+            <div className="product-evolution">
               {this.props.pokemonEvolution.chain.evolves_to[0].species.name}
             </div>
-            <div class="product-evolution">
+            <div className="product-evolution">
               {
                 this.props.pokemonEvolution.chain.evolves_to[0].evolves_to[0]
                   .species.name
