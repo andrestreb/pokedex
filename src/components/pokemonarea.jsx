@@ -1,10 +1,39 @@
 import React, { Component } from "react";
+
 import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+
 import "./pokemonarea.css";
 import Pokemoncard from "./pokemoncard";
 import { isEmptyStatement } from "@babel/types";
 const POKEMONAPI = "https://pokeapi.co/api/v2/pokemon/";
 const POKEMONSPECIESAPI = "https://pokeapi.co/api/v2/pokemon-species/";
+
+const CssTextField = withStyles({
+  root: {
+    "& label.Mui-focused": {
+      color: "white"
+    },
+    "& label": {
+      color: "white"
+    },
+    "& .MuiInputBase-input": {
+      color: "white"
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white"
+      },
+      "&:hover fieldset": {
+        borderColor: "grey"
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "green"
+      }
+    }
+  }
+})(TextField);
 
 class Pokemonarea extends Component {
   constructor(props) {
@@ -100,13 +129,15 @@ class Pokemonarea extends Component {
     } else {
       return (
         <React.Fragment>
-          <div>PokemonId: {pokemonId}</div>
-          <TextField
+          <CssTextField
             id="outlined-number"
-            type="text"
+            type="number"
             label="Pokemon ID"
             value={pokemonId}
             onChange={this.handleChange}
+            InputLabelProps={{
+              shrink: true
+            }}
             margin="normal"
             variant="outlined"
           />
