@@ -1,14 +1,26 @@
 import React, { Component } from "react";
 
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@material-ui/styles";
 
 import "./pokemonarea.css";
 import Pokemoncard from "./pokemoncard";
-import { isEmptyStatement } from "@babel/types";
 const POKEMONAPI = "https://pokeapi.co/api/v2/pokemon/";
 const POKEMONSPECIESAPI = "https://pokeapi.co/api/v2/pokemon-species/";
+
+const MyButton = styled(Button)({
+  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  color: "white",
+  height: 48,
+  padding: "0 30px",
+  margin: "20px"
+});
 
 const CssTextField = withStyles({
   root: {
@@ -50,6 +62,7 @@ class Pokemonarea extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleRandom = this.handleRandom.bind(this);
     this.callPokemonAPI = this.callPokemonAPI.bind(this);
   }
 
@@ -63,6 +76,15 @@ class Pokemonarea extends Component {
     } else {
       this.setState({ pokemonIdReady: false, pokemonId: pokemonIdValue });
     }
+  }
+
+  handleRandom() {
+    this.setState(
+      { pokemonIdReady: true, pokemonId: Math.floor(Math.random() * 808 + 1) },
+      () => {
+        this.callPokemonAPI(this.state.pokemonId);
+      }
+    );
   }
 
   componentDidMount() {
@@ -129,18 +151,28 @@ class Pokemonarea extends Component {
     } else {
       return (
         <React.Fragment>
-          <CssTextField
-            id="outlined-number"
-            type="number"
-            label="Pokemon ID"
-            value={pokemonId}
-            onChange={this.handleChange}
-            InputLabelProps={{
-              shrink: true
-            }}
-            margin="normal"
-            variant="outlined"
-          />
+          <div className="pokemon-options">
+            <CssTextField
+              id="outlined-number"
+              type="number"
+              label="Pokemon ID"
+              value={pokemonId}
+              onChange={this.handleChange}
+              InputLabelProps={{
+                shrink: true
+              }}
+              margin="normal"
+              variant="outlined"
+            />
+
+            <MyButton
+              variant="contained"
+              color="primary"
+              onClick={this.handleRandom}
+            >
+              Random
+            </MyButton>
+          </div>
           <Pokemoncard
             pokemonId={pokemonId}
             pokemon={pokemon}
