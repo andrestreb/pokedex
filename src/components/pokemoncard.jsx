@@ -21,8 +21,6 @@ class Pokemoncard extends Component {
             <div className="product-status product-center">
               {pokemonSpecies.egg_groups[0].name}
             </div>
-
-            <i className="fa fa-language product-center" />
           </div>
           <div className="product-more-info">
             <h1>{pokemon.name}</h1>
@@ -37,17 +35,14 @@ class Pokemoncard extends Component {
             <div className="product-stats">
               <div>
                 <div className="title">Height</div>
-                <i className="fa fa-language" />
                 <div className="value">{pokemon.height / 10}m</div>
               </div>
               <div>
                 <div className="title">weight</div>
-                <i className="fa fa-desktop" />
                 <div className="value">{pokemon.weight / 10}kg</div>
               </div>
               <div>
                 <div className="title">XP</div>
-                <i className="fa fa-feed" />
                 <div className="value">{pokemon.base_experience}</div>
               </div>
             </div>
@@ -56,12 +51,23 @@ class Pokemoncard extends Component {
         <div className="product-general">
           <h1>{pokemon.name}</h1>
           {this.getDescriptions()}
-          <span className="product-more">
-            Mouse over the card for more info
-          </span>
+
+          {this.handleTextChangeOnScreenSize()}
         </div>
       </div>
     );
+  }
+
+  handleTextChangeOnScreenSize() {
+    if (window.innerWidth < 600) {
+      return (
+        <span className="product-more">Click on the card for more info</span>
+      );
+    } else {
+      return (
+        <span className="product-more">Mouse over the card for more info</span>
+      );
+    }
   }
 
   getDescriptions() {
